@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"blog/app/library"
+	"blog/app/library/response"
 	"github.com/gogf/gf/frame/gmvc"
 	"github.com/gogf/gf/net/ghttp"
 )

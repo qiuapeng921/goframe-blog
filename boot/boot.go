@@ -6,5 +6,5 @@ import (
 )
 
 func init() {
-	_, _ = gcron.Add("* * * * * *", cron.CronTest, "second-cron")
+	_, _ = gcron.Add("1 * * * * *", cron.CronTest, "second-cron")
 }

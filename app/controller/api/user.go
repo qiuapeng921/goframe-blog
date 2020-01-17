@@ -2,7 +2,7 @@ package api
 
 import (
 	"blog/app/controller"
-	"blog/app/library"
+	"blog/app/library/response"
 	"blog/app/service/user"
 )
 
