@@ -2,21 +2,17 @@ package api
 
 import (
 	"blog/app/controller"
+	"blog/app/library"
 	"blog/app/request/api"
 	"blog/app/service/user"
-	"blog/app/utility"
 )
 
 type AuthController struct {
 	controller.Controller
 }
 
-type LoginRequest struct {
-	api.LoginRequest
-}
-
 func (c *AuthController) Login() {
-	var data *LoginRequest
+	var data *api.LoginRequest
 	if err := c.Request.GetStruct(&data); err != nil {
 		response.JsonExit(c.Request, 1, err.Error())
 	}

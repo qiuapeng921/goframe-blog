@@ -2,8 +2,8 @@ package api
 
 import (
 	"blog/app/controller"
+	"blog/app/library"
 	"blog/app/service/user"
-	"blog/app/utility"
 )
 
 type UserController struct {

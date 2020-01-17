@@ -1,9 +1,11 @@
 package controller
 
-import (
-	"github.com/gogf/gf/net/ghttp"
-)
+type IndexController struct {
+	Controller
+}
 
-func Index(request *ghttp.Request) {
-	request.Response.Writeln("app")
+func (c *Controller) Index() {
+	c.View.Assign("name", "GoFrame")
+	c.View.Display("index.html")
+	c.Exit()
 }

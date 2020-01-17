@@ -11,7 +11,7 @@ import (
 func init() {
 	server := g.Server()
 	server.Group("/", func(group *ghttp.RouterGroup) {
-		group.ALL("/", controller.Index)
+		group.ALL("/", new(controller.IndexController), "Index")
 	})
 
 	server.Group("/api", func(group *ghttp.RouterGroup) {

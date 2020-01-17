@@ -12,10 +12,10 @@ import (
 
 // Entity is the golang structure for table user.
 type Entity struct {
-    Id         uint        `orm:"id,primary"  json:"id"`          // 用户ID             
-    Account   string       `orm:"account"     json:"account"`    // 账号
-    Password   string      `orm:"password"    json:"password"`    // 密码               
-    CreateTime *gtime.Time `orm:"create_time" json:"create_time"` // 创建时间/注册时间
+	Id         uint        `orm:"id,primary"  json:"id"`          // 用户ID
+	Account    string      `orm:"account"     json:"account"`     // 账号
+	Password   string      `orm:"password"    json:"password"`    // 密码
+	CreateTime *gtime.Time `orm:"create_time" json:"create_time"` // 创建时间/注册时间
 }
 
 // OmitEmpty sets OPTION_OMITEMPTY option for the model, which automatically filers

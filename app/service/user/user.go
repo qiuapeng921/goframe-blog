@@ -1,6 +1,7 @@
 package user
 
 import (
+	"blog/app/library/client"
 	"blog/app/model/user/user"
 	"blog/app/request/api"
 	"errors"
@@ -48,6 +49,8 @@ func Login(account, password string, session *ghttp.Session) error {
 	if result == nil {
 		return errors.New("账号或密码错误")
 	}
+
+	client.HSet("user_info", result.Id, gconv.String(result))
 	return session.Set("user_info", result)
 }
 

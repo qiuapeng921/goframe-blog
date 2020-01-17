@@ -15,7 +15,7 @@
 [viewer]
     Path        = "template"
     DefaultFile = "index.html"
-    Delimiters  =  ["${", "}"]
+    Delimiters  =  ["{{,}}"]
 
 # Database.
 [database]
@@ -31,16 +31,3 @@
 [redis]
     default = "192.168.0.163:6379,0"
     cache   = "192.168.0.163:6379,1,?idleTimeout=600"
-
-[compiler]
-        name     = "my-app"
-        version  = "1.0.0"
-        arch     = "i386,amd64"
-        system   = "linux,windows,darwin"
-        output   = ""
-        path     = "./bin"
-        extra    = "-ldflags \"-s -w\""
-        # 自定义编译时内置变量
-        [compiler.VarMap]
-            author = "qiuapeng921"
-            email  = "qiuapeng921@16.com"
