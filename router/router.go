@@ -15,6 +15,7 @@ func init() {
 	})
 	// 某些浏览器直接请求favicon.ico文件，特别是产生404时
 	server.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
+	server.BindControllerMethod("/ws/{token}",new(controller.SocketController),"Socket")
 
 	server.Group("/api", func(group *ghttp.RouterGroup) {
 		group.Middleware(middleware.CORS)
@@ -27,6 +28,7 @@ func init() {
 			group.Group("/user", func(group *ghttp.RouterGroup) {
 				group.Middleware(middleware.Auth)
 				group.ALL("/info", new(api.UserController), "Info")
+				group.ALL("/getInfo/{id}", new(api.UserController), "GetInfo")
 			})
 		})
 	})

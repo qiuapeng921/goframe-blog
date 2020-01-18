@@ -36,22 +36,22 @@ func Register(data *api.RegisterRequest) error {
 }
 
 // 判断用户是否已经登录
-func IsSignedIn(session *ghttp.Session) bool {
+func IsLogin(session *ghttp.Session) bool {
 	return session.Contains("user_info")
 }
 
 // 用户登录，成功返回用户信息，否则返回nil; passport应当会md5值字符串
-func Login(account, password string, session *ghttp.Session) error {
+func Login(account, password string) (entity *user.Entity, error error) {
 	result, err := user.FindOne("account=? and password=?", account, password)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if result == nil {
-		return errors.New("账号或密码错误")
+		return nil, errors.New("账号或密码错误")
 	}
 
-	client.HSet("user_info", result.Id, gconv.String(result))
-	return session.Set("user_info", result)
+	_, _ = client.HSet("user_info", result.Id, gconv.String(result))
+	return result, err
 }
 
 // 用户注销
@@ -72,4 +72,9 @@ func CheckAccount(account string) bool {
 func GetUserInfo(session *ghttp.Session) (user *user.Entity) {
 	_ = session.GetStruct("user_info", &user)
 	return
+}
+
+func GetUserById(id int) (userEntity *user.Entity) {
+	result, _ := user.FindOne("id", id)
+	return result
 }

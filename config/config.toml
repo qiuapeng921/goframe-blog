@@ -2,7 +2,7 @@
 [server]
 	Address     = ":8500"
 	ServerRoot  = "public"
-	ServerAgent = "gf-app"
+	ServerAgent = "goFrame"
 	LogPath     = "/tmp/log/gf-app/server"
 
 # Logger.
