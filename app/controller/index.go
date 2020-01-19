@@ -5,5 +5,7 @@ type IndexController struct {
 }
 
 func (c *Controller) Index() {
-	c.Render("index.html","name", "GoFrame")
+	c.View.Assign("name", "GoFrame")
+	_ = c.View.Display("index.html")
+	c.Exit()
 }

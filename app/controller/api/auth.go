@@ -2,6 +2,8 @@ package api
 
 import (
 	"blog/app/controller"
+	"blog/app/library/client"
+	"blog/app/library/jwt"
 	"blog/app/request/api"
 	"blog/app/service/user"
 )
@@ -12,20 +14,22 @@ type AuthController struct {
 
 func (c *AuthController) Login() {
 	var data *api.LoginRequest
-	if err := c.Request.GetStruct(&data); err != nil {
+	if err := c.Request.Parse(&data); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	if res, err := user.Login(data.Account, data.Password); err != nil {
+	if result, err := user.Login(data.Account, data.Password); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	} else {
-		c.ResponseSuccess(c.Request, "登录成功", res.Id)
+		accessToken, _ := jwt.CreateToken(result)
+		_, _ = client.HSet("user_info", result.Id, accessToken)
+		c.ResponseSuccess(c.Request, accessToken)
 	}
 }
 
 func (c *AuthController) Register() {
 	// 表单验证
 	var request *api.RegisterRequest
-	if err := c.Request.GetStruct(&request); err != nil {
+	if err := c.Request.Parse(&request); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
 	if err := user.Register(request); err != nil {

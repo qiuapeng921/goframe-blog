@@ -1,9 +1,8 @@
 package consts
 
-var (
-	SUCCESS = 200
-	ERROR   = 100
-)
+const SUCCESS = 200
+const ERROR = 100
+
 
 func GetMsgByCode(code int) string {
 	return ""

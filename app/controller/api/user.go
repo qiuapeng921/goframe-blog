@@ -1,11 +1,9 @@
 package api
 
 import (
-	"blog/app/consts"
 	"blog/app/controller"
-	"blog/app/library/response"
 	"blog/app/service/user"
-	"fmt"
+	"github.com/gogf/gf/util/gconv"
 )
 
 type UserController struct {
@@ -13,14 +11,19 @@ type UserController struct {
 }
 
 func (c *UserController) Info() {
-	c.ResponseSuccess(c.Request, user.GetUserInfo(c.Request.Session))
+	id := c.Request.GetParam("userId")
+	userInfo, err := user.GetUserById(gconv.Uint(id))
+	if err != nil {
+		c.ResponseFail(c.Request, err.Error())
+	}
+	c.ResponseSuccess(c.Request, userInfo)
 }
 
 func (c *UserController) GetInfo() {
 	id := c.Request.GetInt("id")
-	result := user.GetUserById(id)
-	if result == nil {
-		fmt.Println("111111111111111")
+	userInfo, err := user.GetUserById(gconv.Uint(id))
+	if err != nil {
+		c.ResponseFail(c.Request, err.Error())
 	}
-	response.JsonExit(c.Request, consts.SUCCESS, "success", result)
+	c.ResponseSuccess(c.Request, userInfo)
 }

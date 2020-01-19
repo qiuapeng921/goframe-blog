@@ -19,7 +19,7 @@
 
 # Database.
 [database]
-    link  = "mysql:work:123456@tcp(192.168.0.163:3306)/test"
+    link  = "mysql:work:123456@tcp(192.168.0.163:3306)/blog"
     debug = true
     # Database logger.
     [database.logger]
@@ -31,3 +31,6 @@
 [redis]
     default = "192.168.0.163:6379,0"
     cache   = "192.168.0.163:6379,1,?idleTimeout=600"
+
+[token]
+    secret="qiuapeng921"

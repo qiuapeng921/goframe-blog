@@ -1,13 +1,11 @@
 package user
 
 import (
-	"blog/app/library/client"
-	"blog/app/model/user/user"
+	"blog/app/model/user"
 	"blog/app/request/api"
 	"errors"
 	"fmt"
 	"github.com/gogf/gf/net/ghttp"
-	"github.com/gogf/gf/os/gtime"
 	"github.com/gogf/gf/util/gconv"
 	"github.com/gogf/gf/util/gvalid"
 )
@@ -28,7 +26,6 @@ func Register(data *api.RegisterRequest) error {
 		return err
 	}
 	// 记录账号创建/注册时间
-	entity.CreateTime = gtime.Now()
 	if _, err := user.Save(entity); err != nil {
 		return err
 	}
@@ -42,15 +39,16 @@ func IsLogin(session *ghttp.Session) bool {
 
 // 用户登录，成功返回用户信息，否则返回nil; passport应当会md5值字符串
 func Login(account, password string) (entity *user.Entity, error error) {
-	result, err := user.FindOne("account=? and password=?", account, password)
+	result, err := user.FindOne("account", account)
 	if err != nil {
 		return nil, err
 	}
 	if result == nil {
+		return nil, errors.New("账号不存在")
+	}
+	if result.Password != password {
 		return nil, errors.New("账号或密码错误")
 	}
-
-	_, _ = client.HSet("user_info", result.Id, gconv.String(result))
 	return result, err
 }
 
@@ -74,7 +72,6 @@ func GetUserInfo(session *ghttp.Session) (user *user.Entity) {
 	return
 }
 
-func GetUserById(id int) (userEntity *user.Entity) {
-	result, _ := user.FindOne("id", id)
-	return result
+func GetUserById(id uint) (*user.Entity, error) {
+	return user.FindOne("id", id)
 }
