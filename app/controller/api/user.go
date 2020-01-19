@@ -1,6 +1,7 @@
 package api
 
 import (
+	"blog/app/consts"
 	"blog/app/controller"
 	"blog/app/library/response"
 	"blog/app/service/user"
@@ -12,7 +13,7 @@ type UserController struct {
 }
 
 func (c *UserController) Info() {
-	response.JsonExit(c.Request, 200, "success", user.GetUserInfo(c.Request.Session))
+	c.ResponseSuccess(c.Request, user.GetUserInfo(c.Request.Session))
 }
 
 func (c *UserController) GetInfo() {
@@ -21,5 +22,5 @@ func (c *UserController) GetInfo() {
 	if result == nil {
 		fmt.Println("111111111111111")
 	}
-	response.JsonExit(c.Request, 200, "success", result)
+	response.JsonExit(c.Request, consts.SUCCESS, "success", result)
 }

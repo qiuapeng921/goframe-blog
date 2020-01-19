@@ -7,7 +7,7 @@
 
 # Logger.
 [logger]
-    Path        = "/tmp/log/gf-app"
+    Path        = "/tmp/log/goFrame"
     Level       = "all"
     Stdout      = true
 
@@ -23,7 +23,7 @@
     debug = true
     # Database logger.
     [database.logger]
-        Path   = "/tmp/log/gf-app/sql"
+        Path   = "/tmp/log/goFrame/sql"
         Level  = "all"
         Stdout = true
 
