@@ -1,9 +1,20 @@
 package consts
 
-const SUCCESS = 200
-const ERROR = 100
+const (
+	SUCCESS = 200
+	ERROR   = 500
+)
 
+var MsgFlags = map[int]string{
+	SUCCESS: "ok",
+	ERROR:   "fail",
+}
 
-func GetMsgByCode(code int) string {
-	return ""
+func GetMsg(code int) string {
+	msg, ok := MsgFlags[code]
+	if ok {
+		return msg
+	}
+
+	return MsgFlags[ERROR]
 }
