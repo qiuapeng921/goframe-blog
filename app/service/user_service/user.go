@@ -1,8 +1,8 @@
-package user
+package user_service
 
 import (
 	"blog/app/model/user"
-	"blog/app/request/api"
+	"blog/app/request/api_request"
 	"errors"
 	"fmt"
 	"github.com/gogf/gf/net/ghttp"
@@ -11,7 +11,7 @@ import (
 )
 
 // 用户注册
-func Register(data *api.RegisterRequest) error {
+func Register(data *api_request.RegisterRequest) error {
 	// 输入参数检查
 	if e := gvalid.CheckStruct(data, nil); e != nil {
 		return errors.New(e.String())

@@ -2,7 +2,7 @@ package api
 
 import (
 	"blog/app/controller"
-	"blog/app/service/user"
+	"blog/app/service/user_service"
 	"github.com/gogf/gf/util/gconv"
 )
 
@@ -12,7 +12,7 @@ type UserController struct {
 
 func (c *UserController) Info() {
 	id := c.Request.GetParam("userId")
-	userInfo, err := user.GetUserById(gconv.Uint(id))
+	userInfo, err := user_service.GetUserById(gconv.Uint(id))
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
@@ -21,7 +21,7 @@ func (c *UserController) Info() {
 
 func (c *UserController) GetInfo() {
 	id := c.Request.GetInt("id")
-	userInfo, err := user.GetUserById(gconv.Uint(id))
+	userInfo, err := user_service.GetUserById(gconv.Uint(id))
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}

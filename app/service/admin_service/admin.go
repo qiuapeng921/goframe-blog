@@ -1,4 +1,4 @@
-package admin
+package admin_service
 
 import (
 	"blog/app/model/admin"

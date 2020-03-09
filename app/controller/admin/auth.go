@@ -2,8 +2,8 @@ package admin
 
 import (
 	"blog/app/controller"
-	adminRequest "blog/app/request/admin"
-	"blog/app/service/admin"
+	"blog/app/request/admin_request"
+	"blog/app/service/admin_service"
 )
 
 type AuthController struct {
@@ -11,11 +11,11 @@ type AuthController struct {
 }
 
 func (c *AuthController) Login() {
-	var data *adminRequest.LoginRequest
+	var data *admin_request.LoginRequest
 	if err := c.Request.Parse(&data); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	result, err := admin.Login(data.Username, data.Password,c.Session)
+	result, err := admin_service.Login(data.Username, data.Password,c.Session)
 	if  err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
@@ -23,7 +23,7 @@ func (c *AuthController) Login() {
 }
 
 func (c *AuthController) LogOut() {
-	if err := admin.LogOut(c.Request.Session); err != nil {
+	if err := admin_service.LogOut(c.Request.Session); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
 	c.ResponseSuccess(c.Request, c.Request.GetParam("admin_id"))

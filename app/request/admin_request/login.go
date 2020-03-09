@@ -1,4 +1,4 @@
-package admin
+package admin_request
 
 type LoginRequest struct {
 	Username  string `v:"required|length:6,16#账号不能为空|账号长度应当在:min到:max之间"`
