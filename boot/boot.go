@@ -1,10 +1,10 @@
 package boot
 
 import (
-	"blog/boot/cron"
+	"blog/boot/cronfunc"
 	"github.com/gogf/gf/os/gcron"
 )
 
 func init() {
-	_, _ = gcron.Add("1 * * * * *", cron.CronTest, "second-cron")
+	_, _ = gcron.Add("1 * * * * *", cronfunc.CronTest, "second-cron")
 }

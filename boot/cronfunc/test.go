@@ -1,4 +1,4 @@
-package cron
+package cronfunc
 
 import (
 	"github.com/gogf/gf/os/glog"
