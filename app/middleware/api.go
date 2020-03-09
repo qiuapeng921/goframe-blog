@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"blog/app/consts"
-	"blog/app/library/jwt"
-	"blog/app/library/response"
+	"blog/app/helpers/jwt"
+	"blog/app/helpers/response"
 	"github.com/gogf/gf/net/ghttp"
 )
 

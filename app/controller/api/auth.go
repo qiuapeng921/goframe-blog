@@ -2,8 +2,6 @@ package api
 
 import (
 	"blog/app/controller"
-	"blog/app/library/client"
-	"blog/app/library/jwt"
 	"blog/app/request/api_request"
 	"blog/app/service/user_service"
 )
@@ -17,12 +15,11 @@ func (c *AuthController) Login() {
 	if err := c.Request.Parse(&data); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	if result, err := user_service.Login(data.Account, data.Password); err != nil {
-		c.ResponseFail(c.Request, err.Error())
+	result, err := user_service.Login(data.Account, data.Password);
+	if err != nil {
+		c.ResponseSuccess(c.Request, result)
 	} else {
-		accessToken, _ := jwt.CreateToken(result)
-		_, _ = client.HSet("user_info", result.Id, accessToken)
-		c.ResponseSuccess(c.Request, accessToken)
+		c.ResponseFail(c.Request, err.Error())
 	}
 }
 

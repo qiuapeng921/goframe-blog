@@ -15,7 +15,7 @@ func (c *AuthController) Login() {
 	if err := c.Request.Parse(&data); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	result, err := admin_service.Login(data.Username, data.Password,c.Session)
+	result, err := admin_service.Login(data.Username, data.Password)
 	if  err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}

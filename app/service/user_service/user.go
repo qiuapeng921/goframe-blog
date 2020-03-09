@@ -1,6 +1,8 @@
 package user_service
 
 import (
+	"blog/app/helpers/client"
+	"blog/app/helpers/jwt"
 	"blog/app/model/user"
 	"blog/app/request/api_request"
 	"errors"
@@ -49,6 +51,8 @@ func Login(account, password string) (entity *user.Entity, error error) {
 	if result.Password != password {
 		return nil, errors.New("账号或密码错误")
 	}
+	accessToken, err := jwt.GenerateToken(result.Id, result.Account, "api")
+	_, _ = client.HSet("user_token", result.Id, accessToken)
 	return result, err
 }
 

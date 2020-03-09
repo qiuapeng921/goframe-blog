@@ -1,13 +1,15 @@
 package admin_service
 
 import (
+	"blog/app/helpers/client"
+	"blog/app/helpers/jwt"
 	"blog/app/model/admin"
 	"errors"
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// 用户登录，成功返回用户信息，否则返回nil; passport应当会md5值字符串
-func Login(username, password string, session *ghttp.Session) (entity *admin.Entity, error error) {
+// 用户登录，成功返回用户信息
+func Login(username, password string) (entity *admin.Entity, error error) {
 	result, err := admin.FindOne("username", username)
 	if err != nil {
 		return
@@ -18,7 +20,8 @@ func Login(username, password string, session *ghttp.Session) (entity *admin.Ent
 	if result.Password != password {
 		return nil, errors.New("账号或密码错误")
 	}
-	_ = session.Set("admin_info", result)
+	accessToken, err := jwt.GenerateToken(result.Id,result.Username,"admin")
+	_, _ = client.HSet("admin_token", result.Id, accessToken)
 	return result, err
 }
 

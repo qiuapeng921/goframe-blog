@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"blog/app/consts"
-	"blog/app/library/response"
+	"blog/app/helpers/response"
 	"blog/app/service/admin_service"
 	"github.com/gogf/gf/net/ghttp"
 )

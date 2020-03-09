@@ -7,7 +7,7 @@ import (
 
 // 数据返回通用JSON数据结构
 type JsonResponse struct {
-	Code    int         `json:"code"`    // 错误码((0:成功, 1:失败, >1:错误码))
+	Code    int         `json:"code"`    // 错误码((200:成功, 100:失败, >1:错误码))
 	Message string      `json:"message"` // 提示信息
 	Data    interface{} `json:"data"`    // 返回数据(业务接口定义具体数据结构)
 }

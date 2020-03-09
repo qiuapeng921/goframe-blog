@@ -2,7 +2,7 @@ package controller
 
 import (
 	"blog/app/consts"
-	"blog/app/library/response"
+	"blog/app/helpers/response"
 	"github.com/gogf/gf/frame/gmvc"
 	"github.com/gogf/gf/net/ghttp"
 )
