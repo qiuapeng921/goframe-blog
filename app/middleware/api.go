@@ -11,14 +11,14 @@ import (
 func ApiAuth(r *ghttp.Request) {
 	authorization := r.Request.Header.Get("Authorization")
 	if authorization == "" {
-		response.JsonExit(r, consts.ERROR, "您暂未登录")
+		response.JsonExit(r, consts.ERROR, "您暂未登录",nil)
 	}
 	user, err := jwt.ParseToken(authorization)
 	if err != nil {
-		response.JsonExit(r, consts.ERROR, err.Error())
+		response.JsonExit(r, consts.ERROR, err.Error(),nil)
 	}
 	if user.Category != "api"{
-		response.JsonExit(r, consts.ERROR, "token错误")
+		response.JsonExit(r, consts.ERROR, "token错误",nil)
 	}
 	r.SetParam("userId", user.Id)
 	r.Middleware.Next()

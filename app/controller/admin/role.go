@@ -3,7 +3,6 @@ package admin
 import (
 	"blog/app/controller"
 	"blog/app/model/role"
-	"fmt"
 	"github.com/gogf/gf/util/gconv"
 )
 
@@ -62,10 +61,10 @@ func (c *RoleController) Update() {
 
 func (c *RoleController) Delete() {
 	id := c.Request.Get("id")
-	result, err := role.Update("status", 1, "id", id)
-	fmt.Println(gconv.String(result))
+	result, err := role.Update("status=1", "id", id)
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	c.ResponseSuccess(c.Request, result)
+	response, _ := result.RowsAffected()
+	c.ResponseSuccess(c.Request, response)
 }

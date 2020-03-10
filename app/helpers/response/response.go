@@ -13,23 +13,14 @@ type JsonResponse struct {
 }
 
 // 标准返回结果数据结构封装。
-func json(request *ghttp.Request, code int, message string, data ...interface{}) {
-	responseData := interface{}(nil)
-	if len(data) > 0 {
-		responseData = data[0]
-	}
+func JsonExit(request *ghttp.Request, code int, message string, data interface{}) {
 	err := request.Response.WriteJson(JsonResponse{
 		Code:    code,
 		Message: message,
-		Data:    responseData,
+		Data:    data,
 	})
 	if err != nil {
 		glog.Debug(err.Error())
 	}
 	request.Exit()
-}
-
-// 返回JSON数据并退出当前HTTP执行函数。
-func JsonExit(request *ghttp.Request, code int, msg string, data ...interface{}) {
-	json(request, code, msg, data...)
 }
