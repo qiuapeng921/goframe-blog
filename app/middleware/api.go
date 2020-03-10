@@ -17,7 +17,9 @@ func ApiAuth(r *ghttp.Request) {
 	if err != nil {
 		response.JsonExit(r, consts.ERROR, err.Error())
 	}
-	//fmt.Printf("user type:%T value:%v \n", user, user)
+	if user.Category != "api"{
+		response.JsonExit(r, consts.ERROR, "token错误")
+	}
 	r.SetParam("userId", user.Id)
 	r.Middleware.Next()
 }

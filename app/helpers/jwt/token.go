@@ -3,6 +3,7 @@ package jwt
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/gf/util/gconv"
 	"time"
 )
 
@@ -32,7 +33,7 @@ func GenerateToken(id uint, account, category string) (string, error) {
 	}
 
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	token, err := tokenClaims.SignedString(jwtSecret)
+	token, err := tokenClaims.SignedString(gconv.Bytes(jwtSecret))
 
 	return token, err
 }
@@ -40,7 +41,7 @@ func GenerateToken(id uint, account, category string) (string, error) {
 // ParseToken parsing token
 func ParseToken(token string) (*MapClaims, error) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &MapClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return jwtSecret, nil
+		return gconv.Bytes(jwtSecret), nil
 	})
 
 	if tokenClaims != nil {
