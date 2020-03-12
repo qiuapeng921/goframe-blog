@@ -2,9 +2,6 @@ package router
 
 import (
 	"blog/app/controller"
-	"blog/app/controller/admin"
-	"blog/app/controller/api"
-	"blog/app/middleware"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -18,47 +15,6 @@ func init() {
 	server.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
 	server.BindControllerMethod("/ws/{token}", new(controller.SocketController), "Socket")
 
-	// TODO ----------------------前台模块接口--------------------------------
-	server.Group("/api", func(group *ghttp.RouterGroup) {
-		group.Middleware(middleware.CORS)
-		group.Group("/auth", func(group *ghttp.RouterGroup) {
-			group.POST("/login", new(api.AuthController), "Login")
-			group.POST("/register", new(api.AuthController), "Register")
-		})
-		group.Group("/", func(group *ghttp.RouterGroup) {
-			group.POST("/auth/logout", new(api.AuthController), "LogOut")
-			group.Group("/user", func(group *ghttp.RouterGroup) {
-				group.Middleware(middleware.ApiAuth)
-				group.POST("/info", new(api.UserController), "Info")
-				group.POST("/getInfo/{id}", new(api.UserController), "GetInfo")
-			})
-		})
-	})
-
-	// TODO ----------------------后台模块接口--------------------------------
-	server.Group("/admin", func(group *ghttp.RouterGroup) {
-		group.Middleware(middleware.CORS)
-		group.POST("/auth/login", new(admin.AuthController), "Login")
-
-		group.Group("/", func(group *ghttp.RouterGroup) {
-			group.Middleware(middleware.AdminAuth)
-			group.POST("/auth/logout", new(admin.AuthController), "LogOut")
-			// 管理员
-			group.Group("/manage", func(group *ghttp.RouterGroup) {
-				group.POST("/info", new(admin.ManageController), "Info")
-				group.POST("/list", new(admin.ManageController), "List")
-			})
-			// 角色
-			group.Group("/role", func(group *ghttp.RouterGroup) {
-				group.POST("/list", new(admin.RoleController), "List")
-				group.POST("/info/{id}", new(admin.RoleController), "Info")
-				group.POST("/save", new(admin.RoleController), "Save")
-				group.POST("/update/{id}", new(admin.RoleController), "Update")
-				group.POST("/delete/{id}", new(admin.RoleController), "Delete")
-			})
-			// 权限
-
-		})
-
-	})
+	InitAdminRouter(server)
+	InitApiRouter(server)
 }
