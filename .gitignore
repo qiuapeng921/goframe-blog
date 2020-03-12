@@ -4,6 +4,8 @@ vender/
 log/
 */.DS_Store
 main
+blog
 main.exe
+blog.exe
 go.sum
 vendor
