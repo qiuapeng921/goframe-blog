@@ -6,7 +6,7 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-func InitAdminRouter(server *ghttp.Server){
+func InitAdminRouter(server *ghttp.Server) {
 	// TODO ----------------------后台模块接口--------------------------------
 	server.Group("/admin", func(group *ghttp.RouterGroup) {
 		group.Middleware(middleware.CORS)
@@ -17,16 +17,21 @@ func InitAdminRouter(server *ghttp.Server){
 			group.POST("/auth/logout", new(admin.AuthController), "LogOut")
 			// 管理员
 			group.Group("/manage", func(group *ghttp.RouterGroup) {
-				group.POST("/info", new(admin.ManageController), "Info")
-				group.POST("/list", new(admin.ManageController), "List")
+				manage := new(admin.AdminController)
+				group.POST("/list", manage, "List")
+				group.POST("/info", manage, "Info")
+				group.POST("/create", new(admin.RoleController), "Create")
+				group.POST("/update/{id}", new(admin.RoleController), "Update")
+				group.POST("/delete/{id}", new(admin.RoleController), "Delete")
 			})
 			// 角色
 			group.Group("/role", func(group *ghttp.RouterGroup) {
-				group.POST("/list", new(admin.RoleController), "List")
-				group.POST("/info/{id}", new(admin.RoleController), "Info")
-				group.POST("/save", new(admin.RoleController), "Save")
-				group.POST("/update/{id}", new(admin.RoleController), "Update")
-				group.POST("/delete/{id}", new(admin.RoleController), "Delete")
+				role := new(admin.RoleController)
+				group.POST("/list", role, "List")
+				group.POST("/info/{id}", role, "Info")
+				group.POST("/create", role, "Create")
+				group.POST("/update/{id}", role, "Update")
+				group.POST("/delete/{id}", role, "Delete")
 			})
 			// 权限
 

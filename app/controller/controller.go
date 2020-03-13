@@ -11,7 +11,7 @@ type Controller struct {
 	gmvc.Controller
 }
 
-func (c *Controller) ResponseSuccess(request *ghttp.Request, responseData interface{}) {
+func (c *Controller) ResponseSuccess(request *ghttp.Request, responseData ...interface{}) {
 	response.JsonExit(request, consts.SUCCESS, "success", responseData)
 }
 

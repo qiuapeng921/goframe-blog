@@ -15,7 +15,7 @@ func (c *AuthController) Login() {
 	if err := c.Request.Parse(&data); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	result, err := user_service.Login(data.Account, data.Password);
+	result, err := user_service.Login(data.Username, data.Password);
 	if err != nil {
 		c.ResponseSuccess(c.Request, result)
 	} else {
@@ -32,12 +32,12 @@ func (c *AuthController) Register() {
 	if err := user_service.Register(request); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	c.ResponseSuccess(c.Request, "ok")
+	c.ResponseSuccess(c.Request)
 }
 
 func (c *AuthController) LogOut() {
 	if err := user_service.LogOut(c.Request.Session); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	c.ResponseSuccess(c.Request, "ok")
+	c.ResponseSuccess(c.Request)
 }

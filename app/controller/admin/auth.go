@@ -17,7 +17,7 @@ func (c *AuthController) Login() {
 		c.ResponseFail(c.Request, err.Error())
 	}
 	result, err := admin_service.Login(data.Username, data.Password)
-	if  err != nil {
+	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
 	c.ResponseSuccess(c.Request, result)
@@ -26,7 +26,7 @@ func (c *AuthController) Login() {
 func (c *AuthController) LogOut() {
 	adminId := gconv.Int64(c.Request.GetParam("adminId"))
 	result, err := admin_service.LogOut(adminId)
-	if  err != nil {
+	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
 	c.ResponseSuccess(c.Request, result)

@@ -2,7 +2,7 @@ package admin
 
 import (
 	"blog/app/controller"
-	"blog/app/model/role"
+	"blog/app/model/roles"
 	"github.com/gogf/gf/util/gconv"
 )
 
@@ -11,7 +11,7 @@ type RoleController struct {
 }
 
 func (c *RoleController) List() {
-	result, err := role.Model.Limit(0, 10).All()
+	result, err := roles.Model.Limit(0, 10).All()
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
@@ -20,25 +20,25 @@ func (c *RoleController) List() {
 
 func (c *RoleController) Info() {
 	id := c.Request.Get("id")
-	result, err := role.FindOne("id", id)
+	result, err := roles.FindOne("id", id)
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
 	c.ResponseSuccess(c.Request, result)
 }
 
-func (c *RoleController) Save() {
+func (c *RoleController) Create() {
 	params := c.Request.GetMap()
 	roleName := params["role_name"]
 	roleDesc := params["role_desc"]
-	var roleEntity role.Entity
+	var roleEntity roles.Entity
 	roleEntity.RoleName = gconv.String(roleName)
 	roleEntity.RoleDesc = gconv.String(roleDesc)
-	result, err := role.Insert(roleEntity)
+	result, err := roles.Insert(roleEntity)
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	num ,_ := result.LastInsertId()
+	num, _ := result.LastInsertId()
 	c.ResponseSuccess(c.Request, num)
 }
 
@@ -47,21 +47,21 @@ func (c *RoleController) Update() {
 	id := params["id"]
 	roleName := params["role_name"]
 	roleDesc := params["role_desc"]
-	_, err := role.FindOne("id", id)
+	_, err := roles.FindOne("id", id)
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	result, err2 := role.Model.Where("id", id).Data("role_name", roleName, "role_desc", roleDesc).Update()
+	result, err2 := roles.Model.Where("id", id).Data("role_name", roleName, "role_desc", roleDesc).Update()
 	if err2 != nil {
 		c.ResponseFail(c.Request, err2.Error())
 	}
-	num ,_ := result.RowsAffected()
+	num, _ := result.RowsAffected()
 	c.ResponseSuccess(c.Request, num)
 }
 
 func (c *RoleController) Delete() {
 	id := c.Request.Get("id")
-	result, err := role.Update("status=1", "id", id)
+	result, err := roles.Update("status=1", "id", id)
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
