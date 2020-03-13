@@ -19,10 +19,10 @@ func InitAdminRouter(server *ghttp.Server) {
 			group.Group("/manage", func(group *ghttp.RouterGroup) {
 				manage := new(admin.AdminController)
 				group.POST("/list", manage, "List")
-				group.POST("/info", manage, "Info")
-				group.POST("/create", new(admin.RoleController), "Create")
-				group.POST("/update/{id}", new(admin.RoleController), "Update")
-				group.POST("/delete/{id}", new(admin.RoleController), "Delete")
+				group.POST("/info/{id}", manage, "Info")
+				group.POST("/create", manage, "Create")
+				group.POST("/update/{id}", manage, "Update")
+				group.POST("/delete/{id}", manage, "Delete")
 			})
 			// 角色
 			group.Group("/role", func(group *ghttp.RouterGroup) {

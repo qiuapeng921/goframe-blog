@@ -20,7 +20,7 @@ func (c *AdminController) List() {
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	responseData := make(map[string]interface{}, 2)
+	responseData := make(map[string]interface{})
 	responseData["result"] = data
 	responseData["count"] = count
 	c.ResponseSuccess(c.Request, responseData)
@@ -44,7 +44,7 @@ func (c *AdminController) Create() {
 	if !result {
 		c.ResponseFail(c.Request, "添加失败")
 	}
-	c.ResponseSuccess(c.Request)
+	c.ResponseSuccess(c.Request,result)
 }
 
 func (c *AdminController) Update() {
@@ -56,5 +56,15 @@ func (c *AdminController) Update() {
 	if !result {
 		c.ResponseFail(c.Request, "更新失败")
 	}
-	c.ResponseSuccess(c.Request)
+	c.ResponseSuccess(c.Request,result)
+}
+
+func (c *AdminController) Delete() {
+	status := c.Request.GetParam("status")
+	id := c.Request.GetInt("id")
+	result, err := admins.Model.Where("id = ?", id).Update("status = ?", status)
+	if err != nil {
+		c.ResponseFail(c.Request, "删除失败")
+	}
+	c.ResponseSuccess(c.Request, result)
 }

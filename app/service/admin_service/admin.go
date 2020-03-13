@@ -9,8 +9,9 @@ import (
 )
 
 // 用户登录，成功返回用户信息
-func Login(username, password string) (accessToken string, error error) {
-	result, err := admins.GetAdminByUsername(username)
+func Login(username, password string) (accessToken string, err error) {
+	var result *admins.Entity
+	result, err = admins.GetAdminByUsername(username)
 	if err != nil {
 		return
 	}
@@ -33,7 +34,7 @@ func LogOut(adminId int64) (interface{}, error) {
 
 func GetAdminList(request admin_request.AdminRequest) (adminResult []*admins.Entity, count int, err error) {
 	page, limit := 1, 10
-	if request.Page > 0 {
+	if request.Page > 1 {
 		page = request.Page
 	}
 	if request.Limit > 10 {

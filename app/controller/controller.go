@@ -11,10 +11,11 @@ type Controller struct {
 	gmvc.Controller
 }
 
-func (c *Controller) ResponseSuccess(request *ghttp.Request, responseData ...interface{}) {
-	response.JsonExit(request, consts.SUCCESS, "success", responseData)
+func (c *Controller) ResponseSuccess(request *ghttp.Request, responseData interface{}) {
+	success := consts.SUCCESS
+	response.JsonExit(request, success, consts.GetMessage(success), responseData)
 }
 
 func (c *Controller) ResponseFail(request *ghttp.Request, msg string) {
-	response.JsonExit(request, consts.ERROR, msg,"null")
+	response.JsonExit(request, consts.Fail, msg, nil)
 }

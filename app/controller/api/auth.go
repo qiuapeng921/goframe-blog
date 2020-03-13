@@ -32,12 +32,12 @@ func (c *AuthController) Register() {
 	if err := user_service.Register(request); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	c.ResponseSuccess(c.Request)
+	c.ResponseSuccess(c.Request,nil)
 }
 
 func (c *AuthController) LogOut() {
 	if err := user_service.LogOut(c.Request.Session); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	c.ResponseSuccess(c.Request)
+	c.ResponseSuccess(c.Request,nil)
 }

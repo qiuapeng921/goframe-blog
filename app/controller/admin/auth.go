@@ -4,7 +4,6 @@ import (
 	"blog/app/controller"
 	"blog/app/request/admin_request"
 	"blog/app/service/admin_service"
-	"github.com/gogf/gf/util/gconv"
 )
 
 type AuthController struct {
@@ -24,7 +23,7 @@ func (c *AuthController) Login() {
 }
 
 func (c *AuthController) LogOut() {
-	adminId := gconv.Int64(c.Request.GetParam("adminId"))
+	adminId := c.Request.GetInt64("adminId")
 	result, err := admin_service.LogOut(adminId)
 	if err != nil {
 		c.ResponseFail(c.Request, err.Error())

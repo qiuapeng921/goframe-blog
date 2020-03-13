@@ -3,11 +3,11 @@
 	Address     = ":8500"
 	ServerRoot  = "public"
 	ServerAgent = "goFrame"
-	LogPath     = "/tmp/log/gf-app/server"
+	LogPath     = "./runtime/log/gf-app/server"
 
 # Logger.
 [logger]
-    Path        = "/tmp/log/goFrame"
+    Path        = "./runtime/log/goFrame"
     Level       = "all"
     Stdout      = true
 
@@ -19,18 +19,18 @@
 
 # Database.
 [database]
-    link  = "mysql:work:123456@tcp(192.168.0.163:3306)/blog"
+    link  = "mysql:root:@tcp(127.0.0.1:3306)/blog"
     debug = true
     # Database logger.
     [database.logger]
-        Path   = "/tmp/log/goFrame/sql"
+        Path   = "./runtime/log/goFrame/sql"
         Level  = "all"
         Stdout = true
 
 # Redis数据库配置
 [redis]
-    default = "192.168.0.163:6379,0"
-    cache   = "192.168.0.163:6379,1,?idleTimeout=600"
+    default = "127.0.0.1:6379,0"
+    cache   = "127.0.0.1:6379,1,?idleTimeout=600"
 
 [token]
     secret="qiuapeng921"
