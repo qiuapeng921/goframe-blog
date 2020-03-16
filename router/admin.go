@@ -23,7 +23,7 @@ func InitAdminRouter(server *ghttp.Server) {
 				group.POST("/info/{id}", manage, "Info")
 				group.POST("/create", manage, "Create")
 				group.POST("/update/{id}", manage, "Update")
-				group.POST("/delete/{id}", manage, "Delete")
+				group.POST("/delete", manage, "Delete")
 			})
 			// 角色
 			group.Group("/role", func(group *ghttp.RouterGroup) {

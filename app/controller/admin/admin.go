@@ -61,7 +61,7 @@ func (c *AdminController) Update() {
 
 func (c *AdminController) Delete() {
 	status := c.Request.GetParam("status")
-	id := c.Request.GetInt("id")
+	id := c.Request.Get("id")
 	result, err := admins.Model.Where("id = ?", id).Update("status = ?", status)
 	if err != nil {
 		c.ResponseFail(c.Request, "删除失败")
