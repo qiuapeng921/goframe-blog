@@ -15,6 +15,7 @@ func InitAdminRouter(server *ghttp.Server) {
 		group.Group("/", func(group *ghttp.RouterGroup) {
 			group.Middleware(middleware.AdminAuth)
 			group.POST("/auth/logout", new(admin.AuthController), "LogOut")
+			group.POST("/auth/info", new(admin.AuthController), "Info")
 			// 管理员
 			group.Group("/manage", func(group *ghttp.RouterGroup) {
 				manage := new(admin.AdminController)

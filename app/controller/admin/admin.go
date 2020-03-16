@@ -40,8 +40,8 @@ func (c *AdminController) Create() {
 	if err := c.Request.Parse(&request); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	result := admin_service.CreateAdmin(request)
-	if !result {
+	result,err := admin_service.CreateAdmin(request)
+	if err != nil {
 		c.ResponseFail(c.Request, "添加失败")
 	}
 	c.ResponseSuccess(c.Request,result)

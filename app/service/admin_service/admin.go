@@ -44,8 +44,18 @@ func GetAdminList(request admin_request.AdminRequest) (adminResult []*admins.Ent
 	return
 }
 
-func CreateAdmin(request admin_request.AdminCreateRequest) bool {
-	return true
+func CreateAdmin(request admin_request.AdminCreateRequest) (id int64, err error) {
+	var adminEntity admins.Entity
+	adminEntity.Username = request.UserName
+	adminEntity.Password = request.Password
+	adminEntity.Phone = request.Phone
+	result, err := admins.Insert(&adminEntity)
+	if err != nil {
+		err = errors.New(err.Error())
+		return
+	}
+	id, err = result.LastInsertId()
+	return
 }
 
 func UpdateAdmin(request admin_request.AdminUpdateRequest) bool {

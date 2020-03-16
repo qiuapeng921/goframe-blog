@@ -13,6 +13,6 @@ func GetAdminById(id int) (*Entity, error) {
 
 func GetAdminListPage(page, limit int) (admins []*Entity, count int, err error) {
 	count, err = Model.Count()
-	admins, err = Model.FieldsEx("password").Page(page, limit).All()
+	admins, err = Model.FieldsEx("password").Order("id desc").Page(page, limit).All()
 	return
 }
