@@ -19,7 +19,7 @@
 
 # Database.
 [database]
-    link  = "mysql:root:@tcp(127.0.0.1:3306)/blog"
+    link  = "mysql:work:123456@tcp(192.168.0.163:3306)/blog"
     debug = true
     # Database logger.
     [database.logger]
@@ -29,8 +29,8 @@
 
 # Redis数据库配置
 [redis]
-    default = "127.0.0.1:6379,0"
-    cache   = "127.0.0.1:6379,1,?idleTimeout=600"
+    default = "192.168.0.163:6379,0"
+    cache   = "192.168.0.163:6379,1,?idleTimeout=600"
 
 [token]
     secret="qiuapeng921"

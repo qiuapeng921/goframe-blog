@@ -6,10 +6,13 @@ import (
 	"blog/app/model/admins"
 	"blog/app/request/admin_request"
 	"errors"
+	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/gf/util/gconv"
+	"time"
 )
 
 // 用户登录，成功返回用户信息
-func Login(username, password string) (accessToken string, err error) {
+func Login(username, password, clientIp string) (accessToken string, err error) {
 	var result *admins.Entity
 	result, err = admins.GetAdminByUsername(username)
 	if err != nil {
@@ -25,6 +28,8 @@ func Login(username, password string) (accessToken string, err error) {
 	}
 	accessToken, err = jwt.GenerateToken(result.Id, result.Username, "admin")
 	_, _ = client.HSet("admin_token", result.Id, accessToken)
+	updateData := g.MapStrAny{"login_ip": clientIp, "login_time": time.Now().Unix()}
+	_, _ = admins.Update(updateData, "id", result.Id)
 	return
 }
 
@@ -49,6 +54,7 @@ func CreateAdmin(request admin_request.AdminCreateRequest) (id int64, err error)
 	adminEntity.Username = request.UserName
 	adminEntity.Password = request.Password
 	adminEntity.Phone = request.Phone
+	adminEntity.CreateTime = gconv.Uint(time.Now().Unix())
 	result, err := admins.Insert(&adminEntity)
 	if err != nil {
 		err = errors.New(err.Error())
@@ -58,6 +64,15 @@ func CreateAdmin(request admin_request.AdminCreateRequest) (id int64, err error)
 	return
 }
 
-func UpdateAdmin(request admin_request.AdminUpdateRequest) bool {
-	return true
+func UpdateAdmin(id int, request admin_request.AdminUpdateRequest) (int64, error) {
+	var adminEntity admins.Entity
+	adminEntity.Username = request.UserName
+	adminEntity.Password = request.Password
+	adminEntity.Phone = request.Phone
+	adminEntity.UpdateTime = gconv.Uint(time.Now().Unix())
+	result, err := adminEntity.OmitEmpty().Update(adminEntity, "id", id)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected()
 }

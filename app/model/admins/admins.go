@@ -3,7 +3,7 @@ package admins
 // Fill with you ideas below.
 
 func GetAdminByUsername(username string) (*Entity, error) {
-	return  FindOne("username = ?", username)
+	return FindOne("username = ?", username)
 
 }
 

@@ -5,6 +5,7 @@ import (
 	"blog/app/model/admins"
 	"blog/app/request/admin_request"
 	"blog/app/service/admin_service"
+	"github.com/gogf/gf/frame/g"
 )
 
 type AdminController struct {
@@ -40,31 +41,32 @@ func (c *AdminController) Create() {
 	if err := c.Request.Parse(&request); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	result,err := admin_service.CreateAdmin(request)
+	result, err := admin_service.CreateAdmin(request)
 	if err != nil {
 		c.ResponseFail(c.Request, "添加失败")
 	}
-	c.ResponseSuccess(c.Request,result)
+	c.ResponseSuccess(c.Request, result)
 }
 
 func (c *AdminController) Update() {
+	id := c.Request.GetInt("id")
 	var request admin_request.AdminUpdateRequest
 	if err := c.Request.Parse(&request); err != nil {
 		c.ResponseFail(c.Request, err.Error())
 	}
-	result := admin_service.UpdateAdmin(request)
-	if !result {
+	result, err := admin_service.UpdateAdmin(id, request)
+	if err != nil {
 		c.ResponseFail(c.Request, "更新失败")
 	}
-	c.ResponseSuccess(c.Request,result)
+	c.ResponseSuccess(c.Request, result)
 }
 
 func (c *AdminController) Delete() {
-	status := c.Request.GetParam("status")
-	id := c.Request.Get("id")
-	result, err := admins.Model.Where("id = ?", id).Update("status = ?", status)
+	id := c.Request.GetInt("id")
+	result, err := admins.Update(g.Map{"status": 1}, "id", id)
 	if err != nil {
 		c.ResponseFail(c.Request, "删除失败")
 	}
-	c.ResponseSuccess(c.Request, result)
+	responseResult, _ := result.RowsAffected()
+	c.ResponseSuccess(c.Request, responseResult)
 }

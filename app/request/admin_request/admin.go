@@ -12,4 +12,5 @@ type AdminCreateRequest struct {
 }
 
 type AdminUpdateRequest struct {
+	AdminCreateRequest
 }
