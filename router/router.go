@@ -13,6 +13,7 @@ func init() {
 	})
 	// 某些浏览器直接请求favicon.ico文件，特别是产生404时
 	server.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
+	server.AddStaticPath("/static", "public/resource")
 	server.BindControllerMethod("/ws/{token}", new(controller.SocketController), "Socket")
 
 	InitAdminRouter(server)
